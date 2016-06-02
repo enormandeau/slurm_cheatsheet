@@ -5,6 +5,9 @@ Some useful commands to interact with the SLURM job scheduler
 # Submit a job script
 sbatch 00-script/02.stacks.sh
 
+# Cancel a task with the related JOB_ID
+scancel 26666
+
 # Display submitted jobs
 squeue
 

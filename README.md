@@ -17,8 +17,11 @@ sacct -l
 # List jobs that ran in the past
 sacct -S 2016-01-01
 
+# Launch interactive job with 2 CPUs and 8 Go of RAM
+srun -c2 --mem 8000 -pty bash
+
 # Launch 'test.sh' with 4 CPUs and 10 Go or RAM
-srun -c4  test.sh --mem 10000
+srun -c4 test.sh --mem 10000
 
 # Use srun for any long jobs, even cp or rsync
 srun rsync

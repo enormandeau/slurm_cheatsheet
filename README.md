@@ -43,14 +43,48 @@ sacctmgr -p list qos
 
 # List partitions you have access to
 sacctmgr list associations where user=$USER
+
+# Get help about sacct command
+sacct --helpformat
 ```
 
-### More advanced tricks
+### Job dependencies
+
+#### Basic
 
 ```bash
 # Launch job2 if job1 finished OK
 sbatch --dependency=afterok:SLURM_JOB_ID job2.sh
 
-# Get help about sacct command
-sacct --helpformat
+```
+
+#### Advanced
+
+```bash
+#! /bin/bash
+
+# first job - no dependencies
+jid1=$(sbatch  --mem=12g --cpus-per-task=4 job1.sh)
+
+# multiple jobs can depend on a single job
+jid2=$(sbatch  --dependency=afterany:$jid1 --mem=20g job2.sh)
+jid3=$(sbatch  --dependency=afterany:$jid1 --mem=20g job3.sh)
+
+# a single job can depend on multiple jobs
+jid4=$(sbatch  --dependency=afterany:$jid2:$jid3 job4.sh)
+
+# swarm can use dependencies
+jid5=$(swarm --dependency=afterany:$jid4 -t 4 -g 4 -f job5.sh)
+
+# a single job can depend on an array job
+# it will start executing when all arrayjobs have finished
+jid6=$(sbatch --dependency=afterany:$jid5 job6.sh)
+
+# a single job can depend on all jobs by the same user with the same name
+jid7=$(sbatch --dependency=afterany:$jid6 --job-name=dtest job7.sh)
+jid8=$(sbatch --dependency=afterany:$jid6 --job-name=dtest job8.sh)
+sbatch --dependency=singleton --job-name=dtest job9.sh
+
+# show dependencies in squeue output:
+squeue -u $USER -o "%.8A %.4C %.10m %.20E"
 ```

@@ -27,7 +27,7 @@ srun -c2 --mem 8000 -pty bash
 squeue
 
 # List infos about running jobs
-sacct --format="CPUTime,MaxRSS,AveRSS,JobName,Status,Timelimit,Start,Elapsed"
+sacct --format="CPUTime,MaxRSS,AveRSS,JobName,Timelimit,Start,Elapsed"
 
 # Display available partitions
 sinfo

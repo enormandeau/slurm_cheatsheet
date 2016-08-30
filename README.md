@@ -32,6 +32,9 @@ sacct --format="CPUTime,MaxRSS,AveRSS,JobName,Timelimit,Start,Elapsed"
 # Display available partitions
 sinfo
 
+# Display available partitions with more informations
+sacctmgr list qos format="Name,MaxWall,MaxTRESPerUser%20,GrpTRES" | column -t
+
 # List jobs that ran today
 sacct -l
 

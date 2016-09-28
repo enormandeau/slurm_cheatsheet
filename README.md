@@ -17,7 +17,7 @@ srun -c4 test.sh --mem 10000
 srun rsync
 
 # Launch interactive job with 2 CPUs and 8 Go of RAM
-srun -c2 --mem 8000 -pty bash
+srun -c 2 --mem 8000 --pty bash
 ```
 
 ### Find information about partitions and jobs
@@ -25,6 +25,9 @@ srun -c2 --mem 8000 -pty bash
 ```bash
 # Display submitted jobs
 squeue
+
+# Improved format
+squeue -o "%.18i %.9P %.8j %.4C %.8u %.2t %.10M %.6D %.12R"
 
 # List infos about running jobs
 sacct --format="CPUTime,MaxRSS,AveRSS,JobName,Timelimit,Start,Elapsed"

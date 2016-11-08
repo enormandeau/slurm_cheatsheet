@@ -27,7 +27,7 @@ srun -c 2 --mem 8000 --pty bash
 squeue
 
 # Improved format
-squeue -o "%.18i %.9P %.8j %.4C %.8u %.2t %.10M %.6D %.12R"
+squeue -o "%.18i %.9P %.8j %.4C %.8u %.2t %.14M %.6D %.18R %.12m"
 
 # List infos about running jobs
 sacct --format="CPUTime,MaxRSS,AveRSS,JobName,Timelimit,Start,Elapsed"
